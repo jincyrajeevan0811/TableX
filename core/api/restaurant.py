@@ -226,9 +226,10 @@ def dashboard(ctx):
         if d:
             d['total'] = round2(d['total'] + o.total)
             d['orders'] += 1
-    top = list(OrderItem.objects.filter(order__restaurant_id=ctx.rid, order__status='paid', order__paid_at__gte=from7)
-               .exclude(status='cancelled').values('name')
-               .annotate(qty=Sum('qty'), amount=Sum(F('qty') * F('price'), output_field=FloatField())).order_by('-qty')[:5])
+    top = [{'name': x['name'], 'qty': x['q'], 'amount': round2(x['amt'] or 0)} for x in
+           OrderItem.objects.filter(order__restaurant_id=ctx.rid, order__status='paid', order__paid_at__gte=from7)
+           .exclude(status='cancelled').values('name')
+           .annotate(amt=Sum(F('qty') * F('price'), output_field=FloatField()), q=Sum('qty')).order_by('-q')[:5]]
     by_type = [{'type': x['type'], 'c': x['c'], 'v': round2(x['v'] or 0)} for x in paid_today.values('type').annotate(c=Count('id'), v=Sum('total'))]
     methods = [{'method': x['method'], 'v': round2(x['v'] or 0)} for x in Payment.objects.filter(
         restaurant_id=ctx.rid, created_at__gte=t_from, created_at__lt=t_to).values('method').annotate(v=Sum('amount'))]

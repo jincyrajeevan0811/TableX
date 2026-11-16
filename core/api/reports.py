@@ -17,16 +17,16 @@ def daily_items(ctx):
     """Every item sold that day, totals, discounts, net sales and payment split."""
     d_from, d_to, date = day_bounds(ctx.query.get('date'), ctx.settings['tz_offset_minutes'])
     orders = _paid(ctx, d_from, d_to)
-    items = [{'name': x['name'], 'qty': x['qty'], 'orders': x['orders'], 'amount': round2(x['amount'])} for x in
+    items = [{'name': x['name'], 'qty': x['q'], 'orders': x['n_orders'], 'amount': round2(x['amt'])} for x in
              OrderItem.objects.filter(order__in=orders).exclude(status__in=('cancelled', 'pending')).values('name')
-             .annotate(qty=Sum('qty'), orders=Count('order', distinct=True), amount=Sum(F('qty') * F('price'), output_field=FloatField()))
-             .order_by('-amount')]
+             .annotate(amt=Sum(F('qty') * F('price'), output_field=FloatField()), q=Sum('qty'), n_orders=Count('order', distinct=True))
+             .order_by('-amt')]
     t = orders.aggregate(orders=Count('id'), gross=Sum('subtotal'), discount=Sum('discount'), service_charge=Sum('service_charge'),
                          tax=Sum('tax'), delivery_fee=Sum('delivery_fee'), round_off=Sum('round_off'), net=Sum('total'))
     totals = {k: (v or 0) if k == 'orders' else round2(v or 0) for k, v in t.items()}
     totals['quantity'] = sum(i['qty'] for i in items)
-    methods = [{'method': m['method'], 'amount': round2(m['amount']), 'count': m['count']} for m in
-               Payment.objects.filter(order__in=orders).values('method').annotate(amount=Sum('amount'), count=Count('id')).order_by('-amount')]
+    methods = [{'method': m['method'], 'amount': round2(m['amt']), 'count': m['cnt']} for m in
+               Payment.objects.filter(order__in=orders).values('method').annotate(amt=Sum('amount'), cnt=Count('id')).order_by('-amt')]
     by_type = [{'type': x['type'], 'orders': x['orders'], 'amount': round2(x['amount'] or 0)} for x in
                orders.values('type').annotate(orders=Count('id'), amount=Sum('total'))]
     cancelled = OrderItem.objects.filter(order__restaurant_id=ctx.rid, status='cancelled', created_at__gte=d_from, created_at__lt=d_to)
