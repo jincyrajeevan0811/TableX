@@ -1,0 +1,45 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Menu · TableX</title>
+  <meta name="theme-color" content="#6247F5">
+  <link rel="icon" href="{% static 'assets/logo.svg' %}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <style>
+    body { background: var(--bg); }
+    .g-wrap { max-width: 640px; margin: 0 auto; min-height: 100vh; padding-bottom: 120px; }
+    .g-hero { position: relative; padding: 26px 20px 60px; color: #fff; background: var(--grad); border-radius: 0 0 28px 28px; overflow: hidden; }
+    .g-hero::after { content: ''; position: absolute; width: 260px; height: 260px; right: -80px; top: -90px; border-radius: 50%; background: rgba(255,255,255,.12); }
+    .g-hero h1 { font-size: 26px; position: relative; z-index: 1; }
+    .g-hero .t { display: inline-flex; gap: 6px; align-items: center; margin-top: 10px; padding: 6px 12px; border-radius: 99px; background: rgba(255,255,255,.2); font-weight: 700; font-size: 13px; position: relative; z-index: 1; }
+    .g-tools { margin: -34px 14px 0; position: relative; z-index: 2; }
+    .g-tools .card { padding: 12px; box-shadow: var(--shadow); }
+    .g-sticky { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 14px 8px; }
+    .g-item { display: flex; gap: 12px; padding: 16px; border-bottom: 1px solid var(--border); background: var(--surface); }
+    .g-item:first-child { border-radius: 18px 18px 0 0; } .g-item:last-child { border-radius: 0 0 18px 18px; border-bottom: 0; }
+    .g-item .nm { font-weight: 750; font-size: 15px; }
+    .g-item .ds { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+    .g-item .pr { font-weight: 800; margin-top: 6px; }
+    .g-add { align-self: center; }
+    .g-cat { font-weight: 800; font-size: 16px; margin: 18px 16px 10px; }
+    .g-list { margin: 0 14px; border: 1px solid var(--border); border-radius: 18px; }
+    .g-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--bg) 30%); }
+    .g-bar .inner { max-width: 612px; margin: 0 auto; display: flex; gap: 10px; }
+    .status-card { margin: 16px 14px 0; }
+    .g-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .g-actions .btn { flex-direction: column; height: 70px; gap: 4px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div id="root"><div class="loader">Loading menu…</div></div>
+  <div id="modals"></div>
+  <div class="toasts" id="toasts"></div>
+  <div id="print-root"></div>
+  <script type="module" src="{% static 'js/order.js' %}"></script>
+</body>
+</html>

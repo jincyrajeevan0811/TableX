@@ -1,0 +1,26 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>TableX — Restaurant Management</title>
+  <meta name="description" content="TableX runs your restaurant: tables, QR ordering, kitchen display, billing, delivery and reports — in one place.">
+  <meta name="theme-color" content="#0C0E23">
+  <link rel="icon" href="{% static 'assets/logo.svg' %}" type="image/svg+xml">
+  <link rel="manifest" href="{% static 'manifest.webmanifest' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <script>
+    try { const t = localStorage.getItem('tx_theme'); if (t) document.documentElement.dataset.theme = t; } catch {}
+  </script>
+</head>
+<body>
+  <div id="root"><div class="loader">Loading TableX…</div></div>
+  <div id="modals"></div>
+  <div class="toasts" id="toasts"></div>
+  <div id="print-root"></div>
+  <script type="module" src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
