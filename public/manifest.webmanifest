@@ -1,0 +1,11 @@
+{
+  "name": "TableX — Restaurant Management",
+  "short_name": "TableX",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0C0E23",
+  "theme_color": "#0C0E23",
+  "icons": [
+    { "src": "/assets/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
